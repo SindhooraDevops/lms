@@ -22,10 +22,22 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Release Nexus'
+                def packageJSON = readJSON file: 'webapp/package.json'
+                def packageJSONVersion = packageJSON.version
+                echo packageJSONVersion
+                sh 'VERSION=${packageJSONVersion}_${BUILD_NUMBER}_${BRANCH_NAME} npm run build'
+                sh 'zip webapp/dist-${package.JSON version}.zip -r webapp/dist'
+                sh 'curl -v -u admin:Nexus@123* --upload-file webapp/dist-${package.JSON version}.zip http://44.201.105.57:8081/repository/lms/'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Release Nexus'
                 sh 'rm -rf *.zip'
                 sh 'cd webapp && zip dist-${BUILD_NUMBER}.zip -r dist'
                 sh 'cd webapp && curl -v -u $admin:$Nexus@123 --upload-file dist-${BUILD_NUMBER}.zip http://3.95.245.19:8081/repository/lms/'
             }
         }
     }
+}
 }
