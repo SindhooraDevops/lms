@@ -22,7 +22,7 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Release Nexus'
-                def packageJSON = readJSON file: 'webapp/package.json'
+                def packageJSON = readJSON file: 'webapp/package.Json'
                 def packageJSONVersion = packageJSON.version
                 echo '${packageJSONVersion}'
                 sh 'zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist'
