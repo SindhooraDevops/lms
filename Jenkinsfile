@@ -4,14 +4,14 @@ pipeline {
         // More detail: 
         // https://jenkins.io/doc/book/pipeline/jenkinsfile/#usernames-and-passwords
         NEXUS_CRED = credentials('nexus')
-   }
+          }
 
     stages {
         stage('Sonar analysis') {
             steps {
                 echo 'Testing..'
                 sh 'cd webapp && sudo docker run  --rm -e SONAR_HOST_URL="http://34.227.112.54:9000" -e SONAR_LOGIN="sqp_6ac3830625d1b0db9518f1b212a4b748374ba00c"  -v ".:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
-        }
+             }
         }
         stage('Test') {
             steps {
@@ -28,7 +28,8 @@ pipeline {
                     echo "${packageJSONVersion}"  
                     sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
                     sh "curl -v -u admin:Admin123* --upload-file webapp/dist-${packageJSONVersion}.zip http://34.227.112.54:8081/repository/LMS/"
-            }
+               }
+           }
         }
         stage('Deploy') {
             steps {
