@@ -22,7 +22,7 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Release Nexus'
-                def packageJSON = readJSON file: 'webapp/package.Json'
+                def packageJSON = readJSON file:'webapp/package.Json'
                 def packageJSONVersion = packageJSON.version
                 echo '${packageJSONVersion}'
                 sh 'zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist'
@@ -32,7 +32,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Release Nexus'
-                def packageJSON = readJSON file: 'webapp/package.json'
+                def packageJSON = readJSON file:'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo '${packageJSONVersion}'
                 sh "curl -u admin:Nexus@123* -X GET \'http://34.227.112.54:8081/repository/LMS/dist -${packageJSONVersion}.zip\' --output dist -'${packageJSONVersion}'.zip"
