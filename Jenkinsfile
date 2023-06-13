@@ -25,8 +25,8 @@ pipeline {
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo '${packageJSONVersion}'
-                sh 'zip webapp/dist-${packageJSONversion}.zip -r webapp/dist'
-                sh 'curl -v -u admin:Nexus@123* --upload-file webapp/dist-${packageJSONversion}.zip http://34.227.112.54:8081/repository/lms/'
+                sh 'zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist'
+                sh 'curl -v -u admin:Nexus@123* --upload-file webapp/dist-${packageJSONVersion}.zip http://34.227.112.54:8081/repository/lms/'
             }
         }
         stage('Deploy') {
@@ -35,9 +35,9 @@ pipeline {
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo '${packageJSONVersion}'
-                sh 'curl -u admin:Nexus@123* -X GET http://34.227.112.54:8081/repository/LMS/dist -${packageJSONversion}.zip'--output dist -'${packageJSONVersion}'
+                sh 'curl -u admin:Nexus@123* -X GET http://34.227.112.54:8081/repository/LMS/dist -${packageJSONVersion}.zip'--output dist -'${packageJSONVersion}'
                 sh 'sudo rm -rf /var/www/html/*'
-                sh 'sudo unzip -o dist -'${packageJSONversion}'.zip'
+                sh 'sudo unzip -o dist -'${packageJSONVersion}'.zip'
                 sh 'sudo cp -r webapp/dist/* /var/www/html'
            }
         }
