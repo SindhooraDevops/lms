@@ -28,9 +28,8 @@ pipeline {
                    echo "${packageJSONVersion}"  
                    sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
                    sh "curl -v -u admin:Nexus@123 --upload-file webapp/dist-${packageJSONVersion}.zip http://3.83.3.228:8081/repository/LMS/"     
-            }
-               }         
-           }
+                }
+            }         
         }
         stage('Deploy') {
             steps {
